@@ -7,7 +7,7 @@ if CONFIG.port
   set :port, CONFIG.port
 end
 
-vimrc = CONFIG.vimrc || 'NONE'
+pre_script = CONFIG.vimrc ? ('--cmd "source %s"' % CONFIG.vimrc) : ''
 
 get '/' do
   content_type :text
@@ -23,7 +23,7 @@ post '/' do
     text = e.message.text
     if text =~ /^:h(?:e(?:lp?)?)?\s+(\||[^|\s]+)/
       keyword = $1
-      result = `vim -Z -u #{vimrc} -N -e -s --cmd "source #{__dir__}/help.vim" -- "#{keyword.gsub('"', '\"')}"`
+      result = `vim -Z -u NONE -N -e -s #{pre_script} --cmd "source #{__dir__}/help.vim" -- "#{keyword.gsub('"', '\"')}"`
       res =
         if result == ''
           "残念ですが #{keyword} にはヘルプがありません"
