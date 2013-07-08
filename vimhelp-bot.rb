@@ -9,6 +9,11 @@ if CONFIG.port
   set :port, CONFIG.port
 end
 
+get '/' do
+  content_type :text
+  "vimhelp bot for lingr."
+end
+
 post '/' do
   content_type :text
 
