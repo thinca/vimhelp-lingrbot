@@ -28,7 +28,7 @@ post '/' do
         if result == ''
           "残念ですが #{keyword} にはヘルプがありません"
         else
-          result[0, 1000]
+          result.gsub('  ', '　')[0, 1000]
         end
       return res
     end
