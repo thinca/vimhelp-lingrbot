@@ -9,6 +9,8 @@ if CONFIG.port
   set :port, CONFIG.port
 end
 
+vimrc = CONFIG.vimrc || 'NONE'
+
 get '/' do
   content_type :text
   "vimhelp bot for lingr."
@@ -23,7 +25,7 @@ post '/' do
     text = e.message.text
     if text =~ /^:h(?:e(?:lp?)?)?\s+(\||[^|\s]+)/
       keyword = $1
-      result = `vim -Z -u NONE -N -e -s --cmd "source #{__dir__}/help.vim" -- "#{keyword.gsub('"', '\"')}"`
+      result = `vim -Z -u #{vimrc} -N -e -s --cmd "source #{__dir__}/help.vim" -- "#{keyword.gsub('"', '\"')}"`
       res =
         if result == ''
           "残念ですが #{keyword} にはヘルプがありません"
