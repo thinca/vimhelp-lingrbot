@@ -26,13 +26,13 @@ post '/' do
       keyword = $2
       result =
         if bang
-          '慌てないでください'
+          'E478: 慌てないでください'
         else
           `vim -Z -u NONE -N -e -s #{pre_script} --cmd "source #{__dir__}/help.vim" -- "#{keyword.gsub('"', '\"')}"`
         end
       res =
         if result == ''
-          "残念ですが #{keyword} にはヘルプがありません"
+          "E149: 残念ですが #{keyword} にはヘルプがありません"
         else
           result.gsub('  ', '　')[0, 1000]
         end
