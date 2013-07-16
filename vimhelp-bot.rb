@@ -21,9 +21,15 @@ post '/' do
 
   request_data.events.select {|e| e.message }.each do |e|
     text = e.message.text
-    if text =~ /^:h(?:e(?:lp?)?)?\s+(\||[^|\s]+)/
-      keyword = $1
-      result = `vim -Z -u NONE -N -e -s #{pre_script} --cmd "source #{__dir__}/help.vim" -- "#{keyword.gsub('"', '\"')}"`
+    if text =~ /^:h(?:e(?:lp?)?)?(!)?\s*(\||[^|\s]*)/
+      bang = $1
+      keyword = $2
+      result =
+        if bang
+          '慌てないでください'
+        else
+          `vim -Z -u NONE -N -e -s #{pre_script} --cmd "source #{__dir__}/help.vim" -- "#{keyword.gsub('"', '\"')}"`
+        end
       res =
         if result == ''
           "残念ですが #{keyword} にはヘルプがありません"
