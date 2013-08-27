@@ -34,7 +34,7 @@ post '/' do
         if result == ''
           "E149: 残念ですが #{keyword} にはヘルプがありません"
         else
-          result.gsub(/[ \t]+$/, '').strip.gsub(/^$|  /, "　")[0, 1000]
+          result.gsub(/[ \t]+$/, '').rstrip.gsub(/^$|  /, "　")[0, 1000]
         end
       return res
     end
